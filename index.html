@@ -5,11 +5,63 @@
 	
 	<script src="gl-matrix.js"></script>
 	<script src="sink3d.js"></script>
+	<script src="sinkutils.js"></script>
 
 	<script>
+		'use strict';
+
 		function startup() {
 			SINK3D.init();
+			update();
 		}
+
+		function vertex(x, y, z) {
+			var pos = vec3.create();
+			pos[0] = x;
+			pos[1] = y;
+			pos[2] = z;
+
+			var col = vec4.create();
+			col[0] = 255;
+			col[3] = 255;
+
+			return new SINK3D.Vertex(pos, col);
+		}
+
+		function cube() {
+			var verticies = new Array();
+			verticies[0] = vertex(-0.5, -0.5, -1);
+			verticies[1] = vertex(-0.5,  0.5, -1);
+			verticies[2] = vertex( 0.5,  0.5, -1);
+			verticies[3] = vertex( 0.5, -0.5, -1);
+			verticies[4] = vertex(-0.5, -0.5,  1);
+			verticies[5] = vertex(-0.5,  0.5,  1);
+			verticies[6] = vertex( 0.5,  0.5,  1);
+			verticies[7] = vertex( 0.5, -0.5,  1);
+
+			var geom = new SINK3D.Geometry(verticies);
+			geom.mmat = mat4.create();
+
+			var s = vec3.create();
+			s[0] = 0;
+			s[1] = 1;
+			s[2] = 0;
+
+			mat4.fromYRotation(geom.mmat, 3.141592 / 4);
+			
+			return geom;
+		}
+
+		function update() {
+			window.requestAnimationFrame(update);
+
+			SINK3D.clear();
+
+			SINK3D.draw(cube());
+
+			SINK3D.drawBuffer();
+		}
+
 	</script>
 
 	</head>
