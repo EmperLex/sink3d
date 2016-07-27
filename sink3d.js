@@ -10,10 +10,9 @@ SINK3D.init = function () {
 	SINK3D.vmat = mat4.create();
 	SINK3D.pmat = mat4.create();
 
-	/*
-	mat4.perspective(SINK3D.pmat, 0.78, 
-			SINK3D.cvs.width / SINK3D.cvs.height, 0.01, 1000);
-	*/
+	
+	mat4.ortho(SINK3D.pmat, -10, 10, -10, 10, 0.1, 100); 
+	
 	mat4.lookAt(SINK3D.vmat, 
 			vec3.fromValues(0,0,0),
 			vec3.fromValues(0,0,-1),
@@ -47,7 +46,7 @@ SINK3D.pix = function (idx, r, g, b, a) {
 }
 
 SINK3D.pixXy = function (x, y, r, g, b, a) {
-	var pixIdx = (y * SINK3D.cvs.width + x) * 4;
+	var pixIdx = Math.round(y * SINK3D.cvs.width + x) * 4;
 	SINK3D.bbuf.data[pixIdx    ] = r;
 	SINK3D.bbuf.data[pixIdx + 1] = g;
 	SINK3D.bbuf.data[pixIdx + 2] = b;
@@ -79,15 +78,15 @@ SINK3D.Face = function (idx1, idx2, idx3) {
 SINK3D.draw = function (geometry) {
 	for(var vertex of geometry.verticies) {
 		
-		var position = vec3.clone(vertex.position);
+		var position = vec4.clone(vertex.position);
 		var color = vec4.clone(vertex.color);
 
-		vec3.transformMat4(position, position, geometry.mmat);
-		vec3.transformMat4(position, position, SINK3D.vmat);
-		vec3.transformMat4(position, position, SINK3D.pmat);
+		vec4.transformMat4(position, position, geometry.mmat);
+		vec4.transformMat4(position, position, SINK3D.vmat);
+		vec4.transformMat4(position, position, SINK3D.pmat);
 
-		var hw = (SINK3D.cvs.width / 4);
-		var hh = (SINK3D.cvs.height / 4);
+		var hw = (SINK3D.cvs.width / 2);
+		var hh = (SINK3D.cvs.height / 2);
 
 		position[0] = hw + hw * position[0];
 		position[1] = hh + hh * position[1];
