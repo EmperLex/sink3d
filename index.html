@@ -2,55 +2,76 @@
 
 <html>
 	<head>
-	
 	<script src="gl-matrix.js"></script>
+	<script src="draw.js"></script>
+	<script src="scene.js"></script>
 	<script src="sink3d.js"></script>
-	<script src="sinkutils.js"></script>
 
 	<script>
 		'use strict';
+
+
+		function cube() {
+			var verticies = [];
+			//front
+			verticies.push(new SINK3D.Vertex(vec3.fromValues(-0.5, -0.5,  0.5)));
+			verticies.push(new SINK3D.Vertex(vec3.fromValues(0.5, -0.5,  0.5)));
+			verticies.push(new SINK3D.Vertex(vec3.fromValues(0.5,  0.5,  0.5)));
+			verticies.push(new SINK3D.Vertex(vec3.fromValues(-0.5,  0.5,  0.5)));
+			// back
+			verticies.push(new SINK3D.Vertex(vec3.fromValues(-0.5, -0.5, -0.5)));
+			verticies.push(new SINK3D.Vertex(vec3.fromValues(0.5, -0.5, -0.5)));
+			verticies.push(new SINK3D.Vertex(vec3.fromValues(0.5,  0.5, -0.5)));
+			verticies.push(new SINK3D.Vertex(vec3.fromValues(-0.5,  0.5, -0.5)));
+
+			var triangles = [];
+			triangles.push(new SINK3D.Triangle([0, 1, 2]));
+			triangles.push(new SINK3D.Triangle([2, 3, 0]));
+			// top
+			triangles.push(new SINK3D.Triangle([1, 5, 6]));
+			triangles.push(new SINK3D.Triangle([6, 2, 1]));
+			// back
+			triangles.push(new SINK3D.Triangle([7, 6, 5]));
+			triangles.push(new SINK3D.Triangle([5, 4, 7]));
+			// bottom
+			triangles.push(new SINK3D.Triangle([4, 0, 3]));
+			triangles.push(new SINK3D.Triangle([3, 7, 4]));
+			// left
+			triangles.push(new SINK3D.Triangle([4, 5, 1]));
+			triangles.push(new SINK3D.Triangle([1, 0, 4]));
+			// right
+			triangles.push(new SINK3D.Triangle([3, 2, 6]));
+			triangles.push(new SINK3D.Triangle([6, 7, 3]));
+
+			var geom = new SINK3D.Geometry(verticies, triangles);
+			var cbe = new SINK3D.Object3D();
+			cbe.geometry = geom;
+			return cbe;
+		}
 
 		function startup() {
 			SINK3D.init();
 			update();
 		}
 
-		function vertex(x, y, z) {
-			var pos = vec4.fromValues(x,y,z,1);
-			var col = vec4.fromValues(255,0,0,255);
+		var obj = cube();
+		var rot = 0;
 
-			return new SINK3D.Vertex(pos, col);
-		}
-
-		var rot = 0.0;
-
-		function cube() {
-			var verticies = new Array();
-			verticies[0] = vertex(-0.5, -0.5, -0.5);
-			verticies[1] = vertex(-0.5,  0.5, -0.5);
-			verticies[2] = vertex( 0.5,  0.5, -0.5);
-			verticies[3] = vertex( 0.5, -0.5, -0.5);
-			verticies[4] = vertex(-0.5, -0.5,  0.5);
-			verticies[5] = vertex(-0.5,  0.5,  0.5);
-			verticies[6] = vertex( 0.5,  0.5,  0.5);
-			verticies[7] = vertex( 0.5, -0.5,  0.5);
-
-			var geom = new SINK3D.Geometry(verticies);
-			geom.mmat = mat4.create();
-
-			mat4.fromYRotation(geom.mmat, rot += 0.01);
-
-			return geom;
-		}
+		var t0 = new Date().getTime();
 
 		function update() {
+			
 			window.requestAnimationFrame(update);
 
+			//var t0 = new Date().getTime();
+
 			SINK3D.clear();
-
-			SINK3D.draw(cube());
-
+			obj.geometry.rotation[0] = rot+=0.001;
+			obj.geometry.rotation[1] = rot+=0.01;
+			SINK3D.drawObject(obj);
 			SINK3D.drawBuffer();
+
+			//console.log("Frametime " + (new Date().getTime() - t0) );
 		}
 
 	</script>
