@@ -56,6 +56,7 @@
 
 		var obj = cube();
 		var rot = 0;
+		var trans = 0;
 
 		var t0 = new Date().getTime();
 
@@ -63,15 +64,23 @@
 			
 			window.requestAnimationFrame(update);
 
-			//var t0 = new Date().getTime();
+			var t0 = new Date().getTime();
 
 			SINK3D.clear();
-			obj.geometry.rotation[0] = rot+=0.001;
-			obj.geometry.rotation[1] = rot+=0.01;
+
+			
+			obj.geometry.rotation[0] = 0;
+			obj.geometry.rotation[1] = rot += 0.03;
+			obj.geometry.rotation[2] = 0;
+
+			obj.geometry.scale = vec3.fromValues(1.0, 1.0, 1.0);
+			obj.geometry.translation = vec3.fromValues(0.0, 0, 1);
+			
+
 			SINK3D.drawObject(obj);
 			SINK3D.drawBuffer();
 
-			//console.log("Frametime " + (new Date().getTime() - t0) );
+			console.log("Frametime " + (new Date().getTime() - t0) );
 		}
 
 	</script>
@@ -79,7 +88,7 @@
 	</head>
 
 	<body onload="startup()">
-		<canvas id="canvas2d" width="800" height="600"></canvas>
+		<canvas id="canvas2d" width="400" height="300"></canvas>
 	</body>
 </html>
 

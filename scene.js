@@ -43,8 +43,8 @@ SINK3D.Geometry = function(vertices, triangles) {
  * @param {vec3}
  * @param {vec4}
  */
-SINK3D.Vertex = function(position, color, normal) {
-    this.position = position;
+SINK3D.Vertex = function(pos, color, normal) {
+    this.position = vec4.fromValues(pos[0], pos[1], pos[2], 1);
 	this.color = color != 'undefined' ? 
 		color : vec4.fromValues(255, 0, 0, 255); //red is default
 	this.normal = normal;

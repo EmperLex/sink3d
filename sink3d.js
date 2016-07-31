@@ -9,8 +9,9 @@ SINK3D.init = function () {
 	SINK3D.vmat = mat4.create();
 	SINK3D.pmat = mat4.create();
 
-	
-	mat4.ortho(SINK3D.pmat, -2, 2, -2, 2, 0.1, 2); 
+
+	mat4.perspective(SINK3D.pmat, 3.1415 / 2, SINK3D.cvs.width / SINK3D.cvs.height, 0.1, 10);
+	//mat4.ortho(SINK3D.pmat, -8, 8, -6, 6, 0.1, 10); 
 	
 	mat4.lookAt(SINK3D.vmat, 
 			vec3.fromValues(0,0,0),
