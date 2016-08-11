@@ -55,7 +55,12 @@
 		}
 
 		var obj = cube();
+		var obj2 = cube();
+		var obj3 = cube();
+		var obj4 = cube();
+
 		var rot = 0;
+		var rot2 = 0;
 		var trans = 0;
 
 		var t0 = new Date().getTime();
@@ -66,18 +71,29 @@
 
 			var t0 = new Date().getTime();
 
+			//clear screen
 			SINK3D.clear();
 
+			//objects			
 			
+			//#1
 			obj.geometry.rotation[0] = 0;
 			obj.geometry.rotation[1] = rot += 0.03;
 			obj.geometry.rotation[2] = 0;
-
 			obj.geometry.scale = vec3.fromValues(1.0, 1.0, 1.0);
-			obj.geometry.translation = vec3.fromValues(0.0, 0, 1);
+			obj.geometry.translation = vec3.fromValues(0.0, 0, -2);
+			SINK3D.drawObject(obj);
+			
+			//#2	
+			obj2.geometry.rotation[0] = 0;
+			obj2.geometry.rotation[1] = rot2 += 0.01;
+			obj2.geometry.rotation[2] = 0;
+			obj2.geometry.scale = vec3.fromValues(1.0, 1.0, 1.0);
+			obj2.geometry.translation = vec3.fromValues(0.0, 1, -2);
+			SINK3D.drawObject(obj2);
 			
 
-			SINK3D.drawObject(obj);
+			//write to buffer
 			SINK3D.drawBuffer();
 
 			console.log("Frametime " + (new Date().getTime() - t0) );

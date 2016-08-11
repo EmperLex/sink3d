@@ -63,10 +63,32 @@ SINK3D.drawLine = function(p1, p2, img, cvs) {
 	}
 }
 
+//vec4 inc
 SINK3D.drawTriangle = function (v1, v2, v3, img, cvs) {
-	SINK3D.drawLine(v1, v2, img, cvs);
-	SINK3D.drawLine(v2, v3, img, cvs);
-	SINK3D.drawLine(v3, v1, img, cvs);
+	
+
+	//culling
+	var visible;
+	if(SINK3D.cfg.bfcull) {
+		var v2tov3 = vec3.create();
+		vec3.sub(v2tov3, v3, v2);
+		var v1tov2 = vec3.create();
+		vec3.sub(v1tov2, v2, v1);
+		var normal = vec3.create();
+		vec3.cross(normal, v2tov3, v1tov2);
+		var eyetov1 = vec3.create();
+		vec3.sub(eyetov1, v1, SINK3D.cam.eye);
+
+		visible = vec3.dot(eyetov1, normal) > 1;
+	} else {
+		visible = true;
+	}
+
+	if(visible) {
+		SINK3D.drawLine(v1, v2, img, cvs);
+		SINK3D.drawLine(v2, v3, img, cvs);
+		SINK3D.drawLine(v3, v1, img, cvs);
+	}
 }
 
 SINK3D.drawObject = function (obj3d) {
