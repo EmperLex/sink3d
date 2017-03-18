@@ -6,14 +6,14 @@ This is an experimental software renderer I created just for fun. It does not us
 
 The only library its using is the awesome gl-matrix.js for matrix calculations (http://glmatrix.net/).
 
-##DEMO:
+### DEMO:
 You can see it in action by just downloading the project and opening the index.html within your browser. 
 
 Keyboard shortcuts:
 c - enable / disable backface culling
 w - go forward (but be warned, strange things will happen :D )
 
-##FAQ:
+### FAQ:
 
 Q: Can I use it for ...
 
@@ -31,6 +31,6 @@ Q: Why does going forward mess up the rendering so hard?
 
 A: Because there is no clipping implemented right now. Geometry which is "behind the camera" is still visible.
 
-##UPDATES:
+### UPDATES:
 
 - Took this project to GitHub :)
