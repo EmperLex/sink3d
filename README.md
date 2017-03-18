@@ -2,9 +2,12 @@ Sink3D
 ======
 ## An experimental just for fun 3D software renderer
 
-This is an experimental software renderer I created just for fun. It does not use any 3D rendering frameworks and begins by putting 
+This is an experimental software renderer I created just for fun. It does not use any 3D rendering frameworks. It starts its journey very low-level by drawing pixels into a HTML5 canvas element.
 
-You can test it just downloading the and opening 
+The only library its using is the awesome gl-matrix.js for matrix calculations (http://glmatrix.net/).
+
+#DEMO:
+You can see it in action by just downloading the project and opening the index.html within your browser. 
 
 Keyboard shortcuts:
 c - enable / disable backface culling
